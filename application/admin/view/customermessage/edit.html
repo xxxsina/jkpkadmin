@@ -1,0 +1,209 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" name="row[user_id]" value="{$row.user_id}">
+    <input type="hidden" name="row[looked]" value="1">
+    <input type="hidden" name="row[status]" value="answer">
+    <input type="hidden" name="row[updatetime]" value="<?php echo time();?>">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Realname')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {$row.realname|htmlentities}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mobile')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {$row.mobile|htmlentities}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Problem')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {$row.problem|htmlentities}
+        </div>
+    </div>
+    <!-- 图片显示 -->
+    {if isset($row.image) && $row.image}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Image')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="image-item" onclick="showMedia('{$row.image}', 'image')">
+                <img src="{$row.image}" class="img-thumbnail" style="max-height:100px;cursor:pointer;">
+                <div class="media-hover-tip">点击查看</div>
+            </div>
+        </div>
+    </div>
+    {/if}
+    <!-- 视频显示 -->
+    {if isset($row.video) && $row.video}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Video')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="video-item" onclick="showMedia('{$row.video}', 'video', '{$row.video}')">
+                <img src="/assets/img/video.jpeg" class="img-thumbnail" style="max-height:100px;cursor:pointer;">
+                <div class="media-hover-tip"><i class="fa fa-play-circle"></i> 点击播放</div>
+            </div>
+        </div>
+    </div>
+    {/if}
+<!--    <div class="form-group">-->
+<!--        <label class="control-label col-xs-12 col-sm-2">{:__('Image')}:</label>-->
+<!--        <div class="col-xs-12 col-sm-8">-->
+<!--            {$row.image}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label class="control-label col-xs-12 col-sm-2">{:__('Video')}:</label>-->
+<!--        <div class="col-xs-12 col-sm-8">-->
+<!--            {$row.video}-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Answer')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-answer" data-rule="required" class="form-control" name="row[answer]" rows="3">{$row.answer|htmlentities}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Answer_image')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-image" class="form-control" size="50" name="row[answer_image]" type="text" value="{$row.answer_image|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-image" class="btn btn-danger faupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp,image/webp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-image"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-image"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Answer_video')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-file" class="form-control" size="50" name="row[answer_video]" type="text" value="{$row.answer_video|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-file" class="btn btn-danger faupload" data-input-id="c-file" data-multiple="false" data-preview-id="p-file"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-file" class="btn btn-primary fachoose" data-input-id="c-file" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-file"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-file"></ul>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+        </div>
+    </div>
+</form>
+<!-- CSS样式 -->
+<style>
+    .image-list, .video-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .image-item, .video-item {
+        position: relative;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+    .image-item:hover, .video-item:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .media-hover-tip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 10px;
+    }
+    .image-item:hover .media-hover-tip,
+    .video-item:hover .media-hover-tip {
+        opacity: 1;
+    }
+    .video-item .media-hover-tip i {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+</style>
+
+<script>
+    // 显示媒体内容的函数
+    function showMedia(url, type, thumb) {
+        if (type === 'image') {
+            // 计算适合手机的尺寸
+            var isMobile = $(window).width() < 768;
+            var area = isMobile ? ['95%', '95%'] : ['60%', '80%'];
+
+            // 图片弹窗
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                shadeClose: true,
+                area: area,
+                content: '<div style="text-align:center;padding:20px;">'+
+                    '<img src="'+url+'" style="max-height:80vh;max-width:100%;"></div>'
+            });
+        } else if (type === 'video') {
+
+            // 计算适合手机的尺寸
+            var isMobile = $(window).width() < 768;
+            var area = isMobile ? ['95%', '95%'] : ['260px', '540px'];
+
+            // 视频弹窗
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                shadeClose: true,
+                area: area,
+                content: '<div style="padding:10px;background:#000;">'+
+                    '<video src="'+url+'" controls autoplay style="width:100%;height:100%;">'+
+                    '您的浏览器不支持HTML5视频</video></div>'
+            });
+        }
+    }
+
+    // 如果是多图/视频，可以添加这个函数实现相册效果
+    function showMediaGallery(items, index) {
+        var content = items.map(function(item) {
+            if (item.type === 'image') {
+                return '<div style="text-align:center;padding:20px;">'+
+                    '<img src="'+item.url+'" style="max-height:80vh;max-width:100%;"></div>';
+            } else {
+                return '<div style="padding:10px;background:#000;">'+
+                    '<video src="'+item.url+'" controls autoplay style="width:100%;height:100%;">'+
+                    '您的浏览器不支持HTML5视频</video></div>';
+            }
+        });
+
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 1,
+            shadeClose: true,
+            area: ['90%', '90%'],
+            content: content[index],
+            btn: ['上一张', '下一张'],
+            yes: function(index) {
+                // 上一张逻辑
+            },
+            btn2: function(index) {
+                // 下一张逻辑
+            }
+        });
+    }
+</script>

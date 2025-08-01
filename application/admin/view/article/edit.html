@@ -1,0 +1,64 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" name="row[admin_id]" value="{$Think.session.admin.id}">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-type" data-rule="required" class="form-control" name="row[type]">
+                <option value="">{:__('Please select')}</option>
+                <option value="sport" {if isset($row.type) && $row.type == 'sport'}selected{/if}>{:__('Type_sport')}</option>
+                <option value="chinese_medical" {if isset($row.type) && $row.type == 'chinese_medical'}selected{/if}>{:__('Type_chinese_medical')}</option>
+                <option value="science" {if isset($row.type) && $row.type == 'science'}selected{/if}>{:__('Type_science')}</option>
+                <option value="food" {if isset($row.type) && $row.type == 'food'}selected{/if}>{:__('Type_food')}</option>
+                <!-- 可以继续添加更多选项 -->
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-title" data-rule="required" class="form-control" name="row[title]" type="text" value="{$row.title|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-status" data-rule="required" class="form-control" name="row[status]">
+                <option value="0" {if isset($row.status) && $row.status == 0}selected{/if}>{:__('Status_0')}</option>
+                <option value="1" {if isset($row.status) && $row.status == 1}selected{/if}>{:__('Status_1')}</option>
+                <!-- 可以添加更多状态选项 -->
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Is_sort')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-is_sort" class="form-control" name="row[is_sort]" type="text" value="{$row.is_sort|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Cover_image')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-cover_image" data-rule="required" class="form-control" size="50" name="row[cover_image]" type="text" value="{$row.cover_image|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-cover_image" class="btn btn-danger faupload" data-input-id="c-cover_image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp,image/webp" data-multiple="false" data-preview-id="p-cover_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-cover_image" class="btn btn-primary fachoose" data-input-id="c-cover_image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-cover_image"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-cover_image"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Content')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content" class="form-control editor" rows="5" name="row[content]" cols="50">{$row.content|htmlentities}</textarea>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+        </div>
+    </div>
+</form>

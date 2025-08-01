@@ -1,0 +1,38 @@
+{
+    "name": "shenhuobao/service-php",
+    "description": "健康派卡后端API服务",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "php-amqplib/php-amqplib": "^3.5",
+        "predis/predis": "^2.0",
+        "ext-redis": "*",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "ext-pcntl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ShenHuoBao\\": "src/"
+        },
+        "classmap": [
+            "services/",
+            "models/",
+            "utils/",
+            "workers/"
+        ]
+    },
+    "scripts": {
+        "start-worker": "php workers/DataSyncWorker.php",
+        "install-deps": "composer install --no-dev --optimize-autoloader"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
