@@ -17,4 +17,6 @@ return [
     'app\admin\command\Min',
     'app\admin\command\Addon',
     'app\admin\command\Api',
+    'task:income_settlement' => 'app\admin\command\IncomeSettlementTask',
+    'task:pay_back' => 'app\admin\command\PayBackTask',
 ];
