@@ -11,7 +11,7 @@ use think\console\Output;
  * 用法：
  * crontab -e
  * # 每一小时执行一次
- * 0 * * * * php /www/wwwroot/jiankangpaika.blcwg.com/think task:pay_back >> /www/wwwroot/jiankangpaika.blcwg.com/runtime/log/payback.log 2>&1
+ * 0 * * * * php /www/wwwroot/jiankangpaika.blcwg.com/think task:pay_back >> /www/wwwroot/jiankangpaika.blcwg.com/runtime/log/payback_$(date +\%Y\%m\%d).log 2>&1
  */
 class PayBackTask extends Command
 {
@@ -27,7 +27,8 @@ class PayBackTask extends Command
         // 脚本任务逻辑
         $output->writeln('Task is running...');
 
-        $time = time() - 1;
+        $time = time();
+        $time = $time - 2;
         $year = date('Y', $time);
         $month = date('n', $time);
         $day = date('j', $time);
